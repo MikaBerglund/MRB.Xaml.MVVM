@@ -47,6 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Input\CommandBase.cs" />
+    <Compile Include="Input\CommandExecutedEventArgs.cs" />
+    <Compile Include="Input\CommandExecutingEventArgs.cs" />
+    <Compile Include="Input\RelayCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
