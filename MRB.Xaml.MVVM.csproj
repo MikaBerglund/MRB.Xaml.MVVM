@@ -46,15 +46,15 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InternalExtensions.cs" />
     <Compile Include="Input\CommandBase.cs" />
     <Compile Include="Input\CommandExecutedEventArgs.cs" />
     <Compile Include="Input\CommandExecutingEventArgs.cs" />
     <Compile Include="Input\RelayCommand.cs" />
+    <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
