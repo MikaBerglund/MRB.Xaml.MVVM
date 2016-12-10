@@ -11,8 +11,17 @@ namespace MRB.Xaml.MVVM.Input
     /// </summary>
     public class RelayCommand : CommandBase
     {
+        /// <summary>
+        /// Creates a new instance of the command.
+        /// </summary>
+        /// <param name="execute">The delegate that represents the method to invoke when the command is executed.</param>
         public RelayCommand(Action<object> execute) : this(execute, null) { }
 
+        /// <summary>
+        /// Creates a new instance of the command.
+        /// </summary>
+        /// <param name="execute">The delegate that represents the method to invoke when the command is executed.</param>
+        /// <param name="canExecute">A predicate that is used to determine whether the command can be executed.</param>
         public RelayCommand(Action<object> execute, Predicate<object> canExecute)
         {
             if (null == execute) throw new ArgumentNullException("execute");
@@ -22,7 +31,14 @@ namespace MRB.Xaml.MVVM.Input
         }
 
 
+        /// <summary>
+        /// Fired before the command is executed. The command can be cancelled in an event handler to this event.
+        /// </summary>
         public event EventHandler<CommandExecutingEventArgs> Executing;
+
+        /// <summary>
+        /// Fired when the command was executed.
+        /// </summary>
         public event EventHandler<CommandExecutedEventArgs> Executed;
 
 
@@ -63,6 +79,10 @@ namespace MRB.Xaml.MVVM.Input
         }
 
 
+        /// <summary>
+        /// Fires the <see cref="Executed"/> event.
+        /// </summary>
+        /// <param name="parameter"></param>
         protected virtual void OnExecuted(object parameter)
         {
             if (null != this.Executed)
@@ -71,6 +91,10 @@ namespace MRB.Xaml.MVVM.Input
             }
         }
 
+        /// <summary>
+        /// Fires the <see cref="Executing"/> event.
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnExecuting(CommandExecutingEventArgs e)
         {
             if (null != this.Executing)

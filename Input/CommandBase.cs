@@ -31,7 +31,10 @@ namespace MRB.Xaml.MVVM.Input
             return true;
         }
 
-
+        /// <summary>
+        /// Executes the command with the given parameter.
+        /// </summary>
+        /// <param name="parameter">The command parameter.</param>
         public abstract void Execute(object parameter);
 
 
