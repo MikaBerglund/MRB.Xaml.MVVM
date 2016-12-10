@@ -12,15 +12,22 @@ using System.Windows.Threading;
 
 namespace MRB.Xaml.MVVM.Models
 {
+    /// <summary>
+    /// A base class for MVVM model classes.
+    /// </summary>
     public abstract class ModelBase : INotifyPropertyChanged
     {
-        protected ModelBase()
-        {
-        }
+        /// <summary>
+        /// Creates a new instance of the class.
+        /// </summary>
+        protected ModelBase() { }
 
 
 
         private PropertyChangedEventHandler PropertyChangedHandler;
+        /// <summary>
+        /// Fired when a property has changed.
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged
         {
             add { this.PropertyChangedHandler += value; }
@@ -28,6 +35,9 @@ namespace MRB.Xaml.MVVM.Models
         }
 
         private EventHandler<CommandExecutedEventArgs> CommandExecutedHandler;
+        /// <summary>
+        /// Fired when a command has been executed.
+        /// </summary>
         public event EventHandler<CommandExecutedEventArgs> CommandExecuted
         {
             add { this.CommandExecutedHandler += value; }
@@ -46,6 +56,12 @@ namespace MRB.Xaml.MVVM.Models
 
 
         private Dictionary<string, object> Properties = new Dictionary<string, object>();
+        /// <summary>
+        /// Returns the value of a property.
+        /// </summary>
+        /// <typeparam name="T">The type of the property.</typeparam>
+        /// <param name="propertyName">The name of the property.</param>
+        /// <returns>Returns the value of the property or the default value of the <typeparamref name="T"/> if the property does not exist in the model.</returns>
         protected T GetProperty<T>(string propertyName)
         {
             if (this.Properties.ContainsKey(propertyName) && this.Properties[propertyName] is T)
@@ -56,6 +72,12 @@ namespace MRB.Xaml.MVVM.Models
             return default(T);
         }
 
+        /// <summary>
+        /// Returns the value of the property or the value of the given delegate if the property does not exist.
+        /// </summary>
+        /// <typeparam name="T">The type of the property.</typeparam>
+        /// <param name="propertyName">The name of the property.</param>
+        /// <param name="defaultValue">A delegate that returns a default value for the property if the property does not exist in the model.</param>
         protected T GetProperty<T>(string propertyName, Func<T> defaultValue)
         {
             if (this.Properties.ContainsKey(propertyName) && this.Properties[propertyName] is T)
@@ -72,6 +94,12 @@ namespace MRB.Xaml.MVVM.Models
             return v;
         }
 
+        /// <summary>
+        /// Returns the value of the property or the given default value if the property does not exist in the model.
+        /// </summary>
+        /// <typeparam name="T">The type of the property.</typeparam>
+        /// <param name="propertyName">The name of the property.</param>
+        /// <param name="defaultValue">The default value to return if the property does not exist in the model.</param>
         protected T GetProperty<T>(string propertyName, T defaultValue)
         {
             return this.GetProperty<T>(propertyName, delegate () { return defaultValue; });
@@ -113,6 +141,10 @@ namespace MRB.Xaml.MVVM.Models
             }
         }
 
+        /// <summary>
+        /// Fires the <see cref="CommandExecuted"/> event.
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnCommandExecuted(CommandExecutedEventArgs e)
         {
             if (null != this.CommandExecutedHandler)
@@ -121,6 +153,10 @@ namespace MRB.Xaml.MVVM.Models
             }
         }
 
+        /// <summary>
+        /// Fires the <see cref="PropertyChanged"/> event.
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
             if (null != this.PropertyChangedHandler)
@@ -129,12 +165,24 @@ namespace MRB.Xaml.MVVM.Models
             }
         }
 
+        /// <summary>
+        /// Fires the <see cref="PropertyChanged"/> event for the given property.
+        /// </summary>
+        /// <param name="propertyName">The name of the property for which to fire the event.</param>
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChangedEventArgs e = new PropertyChangedEventArgs(propertyName);
             this.OnPropertyChanged(e);
         }
 
+        /// <summary>
+        /// Sets the value of the given property.
+        /// </summary>
+        /// <param name="propertyName">The name of the property to set.</param>
+        /// <param name="propertyValue">The value to set the property to.</param>
+        /// <remarks>
+        /// This method handles checking whether the property has changed, and fires the <see cref="PropertyChanged"/> event if necessary.
+        /// </remarks>
         protected void SetProperty(string propertyName, object propertyValue)
         {
             bool changed = false;
